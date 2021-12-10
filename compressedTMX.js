@@ -17,8 +17,8 @@ var customMapFormat = {
 				var firstTile = true;
 				var lastTile = false;
 
-				for (var y = 0; y < layer.height; y++) {
-					for (var x = 0; x < layer.width; x++) {
+				for (var x = 0; x < layer.width; x++) {
+					for (var y = 0; y < layer.height; y++) {
 						tileId = layer.cellAt(x, y).tileId + 1;
 
 						//Handle first and last tile
@@ -27,11 +27,6 @@ var customMapFormat = {
 							firstTile = false;
 						} else if (x * y === (layer.width - 1) * (layer.height - 1)) {
 							lastTile = true;
-						}
-
-						if (firstTile) {
-							previousTileId = tileId;
-							firstTile = false;
 						}
 
 						if (!lastTile && previousTileId === tileId) {
