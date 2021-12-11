@@ -34,7 +34,7 @@ var customMapFormat = {
 						} else {
 							data.push(tileCounter);
 							data.push(previousTileId);
-							totalDataEntries++;
+							totalDataEntries += 2;
 							previousTileId = tileId;
 							tileCounter = 0;
 						}
