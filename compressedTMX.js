@@ -12,7 +12,7 @@ var customMapFormat = {
 
 			if (layer.isTileLayer) {
 				var data = [];
-				var previousTileId = -1;
+				var previousTileId;
 				var tileCounter = 0;
 				var firstTile = true;
 				var lastTile = false;
@@ -49,6 +49,12 @@ var customMapFormat = {
 
 		//Parse data to XML
 		var xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
+		
+		//Add comment to xml
+		xml += `<!--Compressed version of the Tiled TMX format-->\n`;
+		xml += `<!--The first layer shows the amount of total data entries.-->\n`;
+		xml += `<!--The data itself is split into pairs. The first value shows the amount of repetitions of a tile. The second is the tile id.-->\n`;
+
 		xml += `<map width="${map.width}" height="${map.height}">\n`;
 
 		for (var i = 0; i < layers.length; i++) {
