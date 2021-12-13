@@ -29,9 +29,9 @@ var customMapFormat = {
 							lastTile = true;
 						}
 
-						if (!lastTile && previousTileId === tileId) {
-							tileCounter++;
-						} else {
+						tileCounter++;
+
+						if (lastTile || previousTileId !== tileId) {
 							data.push(tileCounter);
 							data.push(previousTileId);
 							totalDataEntries += 2;
@@ -53,7 +53,7 @@ var customMapFormat = {
 		//Add comment to xml
 		xml += `<!--Compressed version of the Tiled TMX format-->\n`;
 		xml += `<!--The first layer shows the amount of total data entries.-->\n`;
-		xml += `<!--The data itself is split into pairs. The first value shows the amount of repetitions of a tile. The second is the tile id.-->\n`;
+		xml += `<!--The data itself is split into pairs. The first value shows the how often the tile is rendered in a row. The second is the tile id.-->\n`;
 
 		xml += `<map width="${map.width}" height="${map.height}">\n`;
 
