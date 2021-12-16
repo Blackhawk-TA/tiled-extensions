@@ -27,9 +27,8 @@ var customMapFormat = {
 							firstTile = false;
 						} else if (x * y === (layer.width - 1) * (layer.height - 1)) {
 							lastTile = true;
+							tileCounter++; //Increment range for last tile
 						}
-
-						tileCounter++;
 
 						if (lastTile || previousTileId !== tileId) {
 							data.push(tileCounter);
@@ -38,6 +37,8 @@ var customMapFormat = {
 							previousTileId = tileId;
 							tileCounter = 0;
 						}
+
+						tileCounter++;
 					}
 				}
 				layers.push(data);
