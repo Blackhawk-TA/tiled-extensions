@@ -50,7 +50,7 @@ var customMapFormat = {
 
 		//Parse data to XML
 		var xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
-		
+
 		//Add comment to xml
 		xml += `<!--Compressed version of the Tiled TMX format-->\n`;
 		xml += `<!--The first layer shows the amount of total data entries.-->\n`;
@@ -71,7 +71,7 @@ var customMapFormat = {
 			xml += "\t</layer>\n";
 		}
 
-		xml += "</map>";
+		xml += "</map>\n";
 
 		var file = new TextFile(fileName, TextFile.WriteOnly);
 		file.write(xml);
