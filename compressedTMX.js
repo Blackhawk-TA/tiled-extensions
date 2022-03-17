@@ -3,6 +3,7 @@ var customMapFormat = {
 	extension: "tmx",
 
 	write: function(map, fileName) {
+		const counterMax = 255; //Make sure the counter can be stored in a uint8
 		var layers = [];
 		var tileId;
 		var totalDataEntries = 0;
@@ -25,12 +26,12 @@ var customMapFormat = {
 						if (firstTile) {
 							previousTileId = tileId;
 							firstTile = false;
-						} else if (x * y === (layer.width - 1) * (layer.height - 1)) {
+						} else if (tileCounter < counterMax && x * y === (layer.width - 1) * (layer.height - 1)) {
 							lastTile = true;
 							tileCounter++; //Increment range for last tile
 						}
 
-						if (lastTile || previousTileId !== tileId) {
+						if (tileCounter == counterMax || lastTile || previousTileId !== tileId) {
 							data.push(tileCounter);
 							data.push(previousTileId);
 							totalDataEntries += 2;
@@ -55,6 +56,7 @@ var customMapFormat = {
 		xml += `<!--Compressed version of the Tiled TMX format-->\n`;
 		xml += `<!--The first layer shows the amount of total data entries.-->\n`;
 		xml += `<!--The data itself is split into pairs. The first value shows the how often the tile is rendered in a row. The second is the tile id.-->\n`;
+		xml += `<!--The highest repetition count is 255 to allow storing it in an unsigned 8bit integer. If a tile is repeated more often, it is split into several pairs.-->\n`;
 
 		xml += `<map width="${map.width}" height="${map.height}">\n`;
 
