@@ -3,7 +3,7 @@ var customMapFormat = {
 	extension: "tmx",
 
 	write: function(map, fileName) {
-		const counterMax = 255; //Make sure the counter can be stored in a uint8
+		const counterMax = 256; //Make sure the counter can be stored in a uint8
 		var layers = [];
 		var tileId;
 		var totalDataEntries = 0;
@@ -30,9 +30,9 @@ var customMapFormat = {
 				if (layer.cellAt(0, 0).tileId == 64) {
 					isTreeLayer = true;
 
-					//Tuple of 0 at the beginning can be used as tree layer identifier because there is no tile sequence of 0 with tile id 0
-					data.push(0);
-					data.push(0);
+					//The tuple (256,65356) at the beginning can be used as tree layer identifier because does not occur on a normal tilemap
+					data.push(256);
+					data.push(65356);
 				}
 
 				for (var x = 0; x < layer.width; x++) {
@@ -86,10 +86,10 @@ var customMapFormat = {
 					}
 				}
 
-				//Add tuple of 0 at the end of a tree layer.
+				//Add the tuple 8256,65356) at the end of a tree layer.
 				if (isTreeLayer) {
-					data.push(0);
-					data.push(0);
+					data.push(256);
+					data.push(65356);
 				}
 
 				layers.push(data);
@@ -107,7 +107,7 @@ var customMapFormat = {
 		xml += `<!--The first layer shows the amount of total data entries.-->\n`;
 		xml += `<!--The data itself is split into pairs. The first value shows the how often the tile is rendered in a row. The second is the tile id.-->\n`;
 		xml += `<!--The highest repetition count is 255 to allow storing it in an unsigned 8bit integer. If a tile is repeated more often, it is split into several pairs.-->\n`;
-		xml += `<!--Tree layers always starts and ends with a tuple of 0. A single tree information is a quadruple.-->\n`;
+		xml += `<!--Tree layers always starts and ends with the tuple (256,65356). A single tree information is a quadruple.-->\n`;
 		xml += `<!--It consists of the tile id of the top left tree tile, its x/y position on the map and the amount of repetitions-->\n`;
 
 		xml += `<map width="${map.width}" height="${map.height}">\n`;
