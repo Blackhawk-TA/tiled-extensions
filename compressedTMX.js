@@ -48,7 +48,6 @@ var customMapFormat = {
 								var treeRepetition = treeMap[n][1];
 								var treeBottom = treeMap[n][2];
 
-								//TODO support single trees
 								switch(tileId) {
 									case treeTop:
 										treeRepetitions = 0;
