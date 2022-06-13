@@ -30,9 +30,10 @@ var customMapFormat = {
 				if (layer.cellAt(0, 0).tileId == 64) {
 					isTreeLayer = true;
 
-					//The tuple (256,65356) at the beginning can be used as tree layer identifier because does not occur on a normal tilemap
+					//The tuple (256,65356) at the beginning can be used as tree layer identifier because does not occur on a normal tile map
 					data.push(256);
 					data.push(65356);
+					totalDataEntries += 2;
 				}
 
 				for (var x = 0; x < layer.width; x++) {
@@ -60,6 +61,7 @@ var customMapFormat = {
 										break;
 									case treeBottom:
 										data.push(treeRepetitions);
+										totalDataEntries += 4;
 										break;
 								}
 							}
@@ -73,7 +75,7 @@ var customMapFormat = {
 								tileCounter++; //Increment range for last tile
 							}
 
-							if (tileCounter == counterMax || lastTile || previousTileId !== tileId) {
+							if (tileCounter === counterMax || lastTile || previousTileId !== tileId) {
 								data.push(tileCounter);
 								data.push(previousTileId);
 								totalDataEntries += 2;
@@ -90,6 +92,7 @@ var customMapFormat = {
 				if (isTreeLayer) {
 					data.push(256);
 					data.push(65356);
+					totalDataEntries += 2;
 				}
 
 				layers.push(data);
