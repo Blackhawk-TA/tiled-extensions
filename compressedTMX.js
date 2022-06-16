@@ -50,10 +50,10 @@ var customMapFormat = {
 
 								switch(tileId) {
 									case treeTop:
-										treeRepetitions = 0;
+										treeRepetitions = 1; //Start at 1 because reading from the file in c++ decrements by one => 1 repetition equals one tree
 										data.push(tileId);
-										data.push(x);
-										data.push(y);
+										data.push(x + 1); //Increment position because reading the position from the file in c++ decrements by one
+										data.push(y + 1);
 										break;
 									case treeRepetition:
 										treeRepetitions++;
