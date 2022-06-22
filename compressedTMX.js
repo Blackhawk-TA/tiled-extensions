@@ -107,7 +107,7 @@ var customMapFormat = {
 		//Add comment to xml
 		xml += `<!--Compressed version of the Tiled TMX format-->\n`;
 		xml += `<!--The first layer shows the amount of total data entries.-->\n`;
-		xml += `<!--The data itself is split into pairs. The first value shows the how often the tile is rendered in a row. The second is the tile id.-->\n`;
+		xml += `<!--The data itself is split into pairs. The first value shows how often the tile is rendered in a row. The second is the tile id.-->\n`;
 		xml += `<!--The highest repetition count is 255 to allow storing it in an unsigned 8bit integer. If a tile is repeated more often, it is split into several pairs.-->\n`;
 		xml += `<!--Tree layers always starts and ends with the tuple (256,65356). A single tree information is a quadruple.-->\n`;
 		xml += `<!--It consists of the tile id of the top left tree tile, its x/y position on the map and the amount of repetitions-->\n`;
