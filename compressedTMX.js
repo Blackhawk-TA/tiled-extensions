@@ -12,6 +12,9 @@ var customMapFormat = {
 			[2908, 3100, 3036], //3x3 green tree fancy
 			[2911, 3103, 3039], //2x3 green tree
 			[3217, 3219, 3345], //2x3 green tree round
+			[2197, 2252, 2262], //3x3 white tree
+			[1922, 2126, 1986], //2x3 white tree round
+			[1920, 2124, 1984], //2x3 white tree
 		];
 
 		for (var i = 0; i < map.layerCount; ++i) {
