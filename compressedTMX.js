@@ -6,6 +6,8 @@ var customMapFormat = {
 		const counterMax = 256; //Make sure the counter can be stored in a uint8
 		var layers = [];
 		var tileId;
+		var tileEntries = 0;
+		var treeEntries = 0;
 		var totalDataEntries = 0;
 		var treeMap = [ //First is id of left tree top, 2nd is left top of tree repetition cluster of 3x2 tiles, last is left bottom of tree
 			[2905, 3097, 3033], //3x3 green tree
@@ -64,6 +66,7 @@ var customMapFormat = {
 									case treeBottom:
 										data.push(treeRepetitions);
 										totalDataEntries += 4;
+										treeEntries++;
 										break;
 								}
 							}
@@ -83,6 +86,11 @@ var customMapFormat = {
 								totalDataEntries += 2;
 								previousTileId = tileId;
 								tileCounter = 0;
+
+								//Do not count empty tile, since it is not stored in the C++ vector later on
+								if (previousTileId !== 0) {
+									tileEntries++;
+								}
 							}
 
 							tileCounter++;
@@ -101,18 +109,20 @@ var customMapFormat = {
 			}
 		}
 
-		//Increment totalDataEntries, because reading from the file in c++ decrements by one
+		//Increment totalDataEntries, tile and tree entries, because reading from the file in c++ decrements by one
+		treeEntries++;
+		tileEntries++;
 		totalDataEntries++;
 
 		//Write array length as first array entry, because in C++ this becomes an incomplete array
-		layers.unshift(totalDataEntries);
+		layers.unshift([totalDataEntries, tileEntries, treeEntries]);
 
 		//Parse data to XML
 		var xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
 
 		//Add comment to xml
 		xml += `<!--Compressed version of the Tiled TMX format-->\n`;
-		xml += `<!--The first layer shows the amount of total data entries.-->\n`;
+		xml += `<!--The first layer shows the amount of total data entries, tree and tile entries in this order.-->\n`;
 		xml += `<!--The data itself is split into pairs. The first value shows how often the tile is rendered in a row. The second is the tile id.-->\n`;
 		xml += `<!--The highest repetition count is 256 to allow storing it in an unsigned 8bit integer. If a tile is repeated more often, it is split into several pairs.-->\n`;
 		xml += `<!--Tree layers always starts and ends with the tuple (256,65536). A single tree information is a quadruple.-->\n`;
